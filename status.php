@@ -82,7 +82,7 @@ foreach($urls as $key => $url){
 	// É necessário indicar que o formato do e-mail é html
 	$headers  = 'MIME-Version: 1.0' . "\r\n";
 	$headers .= 'Content-type: text/html; charset=utf-8' . "\r\n";
-	$headers .= 'From: $nome <$email>';
+	$headers .= 'From: <$email>';
 	//$headers .= "Bcc: $EmailPadrao\r\n";
 
 	$enviaremail = mail($destino, $assunto, $corpo, $headers);
