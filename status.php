@@ -10,9 +10,16 @@
  *		- Armazenar lista de sites em banco de dados ou algo mais leve
  */
 
+// Definir array de sites a serem testados. (<Nome do site> => <url de teste>)
+$urls = array(
+	'Criarte Blogs' => 'http://criarteblogs.com.br/blog/wp-content/uploads/2017/08/criarteblogs-logo.png',
+	'Vitalli Imóveis' => 'http://vitalliimoveis.com/wp-content/themes/refs/logo-vitalli-imobiliaria-araraquara.png',
+);
+
+
 
 // URL a se testada
-$url = "http://criarteblogs.com.br/blog/wp-content/uploads/2017/08/criarteblogs-logo.png";
+$url = $urls['Vitalli Imóveis'];
 
 // Inicia o CURL
 
@@ -31,12 +38,11 @@ $out = curl_exec($curl);
 $response = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 
 // Exibe a resposta. Implementar teste de diversos códigos HTTP
-echo "<h2 style='color:darkcyan;'>".$response." : </h2>";
 
 if ($response == '404') {
-	echo "<h2 style='color:darkred;'>O site está fora do ar, Sir...</h2>";
+	echo "<h2 style='color:darkred;'>".$response." : Site fora do ar, Sir...</h2>";
 } else {
-	echo "<h2 style='color:darkgreen;'>Está tudo bem, Sir...</h2>";
+	echo "<h2 style='color:darkgreen;'>".$response." : Está tudo bem, Sir...</h2>";
 }
 
 ?>
