@@ -13,12 +13,12 @@
 // Definir array de sites a serem testados. (<Nome do site> => <url de teste>)
 $urls = array(
 	'Criarte Blogs' => 'http://criarteblogs.com.br/blog/wp-content/uploads/2017/08/criarteblogs-logo.png',
-	'Vitalli Imóveis' => 'http://vitalliimoveis.com/wp-content/themes/refs/logo-vitalli-imobiliaria-araraquara.png',
+	'Vitalli Imóveis' => 'http://vitalliimoveis.com/wp-content/themes/refs/logo-vitalli-imobiliaria-araraquar.png',
 );
 
 // Testa cada URL do arrya
 
-foreach( $urls as $url ){
+foreach( $urls as $key => $url ){
 	// URL a se testada
 	// $url = $urls['Vitalli Imóveis'];
 
@@ -38,15 +38,17 @@ foreach( $urls as $url ){
 	// Obtém a resposta HTTP
 	$response = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 
-	// Exibe a resposta. Implementar teste de diversos códigos HTTP
+	// Exibe a resposta. Implementar teste de diversos códigos HTTP. Diferenciar com font-weight.
 
 	if ($response == '404') {
-		echo "<h2 style='color:darkred;'>".$response." : ". $url ." Site fora do ar, Sir...</h2>";
+		echo "<h3 style='color:darkred;font-weight:bold;font-family: sans-serif;'>".$response." : ". $key ." Fora do ar, Sir...</h3>";
 	} else {
-		echo "<h2 style='color:darkgreen;'>".$response." : ". $url ." Está bem, Sir...</h2>";
-	
-}
+		echo "<h3 style='color:darkgreen;font-weight:200;font-family: sans-serif;'>".$response." : ". $key ." Está bem, Sir...</h3>";
+	}
 
+	echo "<hr></hr>";
+
+	// var_dump($urls);
 
 }
 
