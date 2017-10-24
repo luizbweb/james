@@ -3,7 +3,7 @@
 /*
  * Roadmap:
  *		- Testar multiplos sites por um array - OK
- *		- Testar multiplos sites por arquivo txt - 
+ *		- Testar multiplos sites por arquivo txt - OK <Nome doe site> <URL>
  *		- Enviar resultados por email
  * 		- Rodar automaticamente pelo cron
  *		- Generalizar usando funções ou objetos
@@ -41,19 +41,57 @@ foreach($urls as $key => $url){
 	// Acessa a URL de fato
 	$out = curl_exec($curl);
 
-
 	// Obtém a resposta HTTP
 	$response = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+
 
 	// Exibe a resposta. Implementar teste de diversos códigos HTTP (418 - Eu sou um bule de chá). Diferenciar com font-weight.
 	if ($response == '404') {
 		echo "<h3 style='color:darkred;font-weight:bold;font-family: sans-serif;'>". $response ." : ". $key ." Fora do ar, Sir...</h3>";
+		
+		// Armazena o status para enviar por email
+		$status[$key] = $response ." ". $key ." Fora do ar, Sir...<br>";
 	} else {
 		echo "<h3 style='color:darkgreen;font-weight:200;font-family: sans-serif;'>". $response ." : ". $key ." Está bem, Sir...</h3>";
+
+		// Armazena o status para enviar por email
+		$status[$key] = $response ." ". $key ." Está bem, Sir...<br>";
 	}
 
 	echo "<hr></hr>";
 
 }
 
+	/*
+	$corpo = "";
+
+	foreach ($status as $key => $value) {
+		$corpo = $corpo . $key ." - ". $value ."<br>";
+	}
+
+	echo $corpo;
+	
+	// Envia o email
+  	$email = "bruno@refstecnologia.com.br";
+	$emailenviar = "luizbweb@gmail.com";
+	$destino = $emailenviar;
+	$assunto = "James - REFs Status";
+
+	// É necessário indicar que o formato do e-mail é html
+	$headers  = 'MIME-Version: 1.0' . "\r\n";
+	$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+	$headers .= 'From: $nome <$email>';
+	//$headers .= "Bcc: $EmailPadrao\r\n";
+
+	$enviaremail = mail($destino, $assunto, $corpo, $headers);
+	
+	if($enviaremail){
+		$mgm = "E-MAIL ENVIADO COM SUCESSO!";
+		// echo " <meta http-equiv='refresh' content='10;URL=status.php'>";
+		echo $mgm;
+	} else {
+		$mgm = "ERRO AO ENVIAR E-MAIL!";
+		echo $mgm;
+	}
+*/
 ?>
