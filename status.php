@@ -1,5 +1,14 @@
 <?php
 // Acessa a URL desejada e exibe a sua disponibilidade
+/*
+ * Roadmap:
+ *		- Testar multiplos sites por um array
+ *		- Testar multiplos sites por arquivo txt
+ *		- Enviar resultados por email
+ * 		- Rodar automaticamente pelo cron
+ *		- Generalizar usando funções ou objetos
+ *		- Armazenar lista de sites em banco de dados ou algo mais leve
+ */
 
 
 // URL a se testada
