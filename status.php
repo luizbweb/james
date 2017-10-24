@@ -16,33 +16,38 @@ $urls = array(
 	'Vitalli Imóveis' => 'http://vitalliimoveis.com/wp-content/themes/refs/logo-vitalli-imobiliaria-araraquara.png',
 );
 
+// Testa cada URL do arrya
+
+foreach( $urls as $url ){
+	// URL a se testada
+	// $url = $urls['Vitalli Imóveis'];
+
+	// Inicia o CURL
+
+	$curl = curl_init();
+
+	curl_setopt($curl, CURLOPT_URL, $url);
+
+	// curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
+
+	curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+
+	// Acessa a URL de fato
+	$out = curl_exec($curl);
+
+	// Obtém a resposta HTTP
+	$response = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+
+	// Exibe a resposta. Implementar teste de diversos códigos HTTP
+
+	if ($response == '404') {
+		echo "<h2 style='color:darkred;'>".$response." : ". $url ." Site fora do ar, Sir...</h2>";
+	} else {
+		echo "<h2 style='color:darkgreen;'>".$response." : ". $url ." Está bem, Sir...</h2>";
+	
+}
 
 
-// URL a se testada
-$url = $urls['Vitalli Imóveis'];
-
-// Inicia o CURL
-
-$curl = curl_init();
-
-curl_setopt($curl, CURLOPT_URL, $url);
-
-// curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
-
-curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-
-// Acessa a URL de fato
-$out = curl_exec($curl);
-
-// Obtém a resposta HTTP
-$response = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-
-// Exibe a resposta. Implementar teste de diversos códigos HTTP
-
-if ($response == '404') {
-	echo "<h2 style='color:darkred;'>".$response." : Site fora do ar, Sir...</h2>";
-} else {
-	echo "<h2 style='color:darkgreen;'>".$response." : Está tudo bem, Sir...</h2>";
 }
 
 ?>
