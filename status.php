@@ -50,36 +50,38 @@ foreach($urls as $key => $url){
 		echo "<h3 style='color:darkred;font-weight:bold;font-family: sans-serif;'>". $response ." : ". $key ." Fora do ar, Sir...</h3>";
 		
 		// Armazena o status para enviar por email
-		$status[$key] = $response ." ". $key ." Fora do ar, Sir...<br>";
+		$status[$key] = "<span style='color:darkred;font-weight:bold;font-family: sans-serif;'>".$response ." ". $key ." Fora do ar, Sir...</span>";
 	} else {
 		echo "<h3 style='color:darkgreen;font-weight:200;font-family: sans-serif;'>". $response ." : ". $key ." Está bem, Sir...</h3>";
 
 		// Armazena o status para enviar por email
-		$status[$key] = $response ." ". $key ." Está bem, Sir...<br>";
+		$status[$key] = "<span style='color:darkgreen;font-weight:200;font-family: sans-serif;'>". $response ." ". $key ." Está bem, Sir...</span>";
 	}
 
 	echo "<hr></hr>";
 
 }
 
+	
 	/*
+
 	$corpo = "";
 
 	foreach ($status as $key => $value) {
-		$corpo = $corpo . $key ." - ". $value ."<br>";
+		$corpo = $corpo ."". $value ."<br>";
 	}
 
-	echo $corpo;
+	// echo $corpo;
 	
 	// Envia o email
-  	$email = "bruno@refstecnologia.com.br";
+  	$email = "luizbweb@gmail.com";
 	$emailenviar = "luizbweb@gmail.com";
 	$destino = $emailenviar;
 	$assunto = "James - REFs Status";
 
 	// É necessário indicar que o formato do e-mail é html
 	$headers  = 'MIME-Version: 1.0' . "\r\n";
-	$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+	$headers .= 'Content-type: text/html; charset=utf-8' . "\r\n";
 	$headers .= 'From: $nome <$email>';
 	//$headers .= "Bcc: $EmailPadrao\r\n";
 
@@ -92,6 +94,6 @@ foreach($urls as $key => $url){
 	} else {
 		$mgm = "ERRO AO ENVIAR E-MAIL!";
 		echo $mgm;
-	}
-*/
+	}*/
+
 ?>
