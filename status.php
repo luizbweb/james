@@ -1,99 +1,70 @@
+<?php 
+
+include('verifica-url.php');
+include('separa-urls.php');
+include('envia-email.php');
+
+
+?>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>James, o mordomo</title>
+</head>
+<body>
 <?php
 // Acessa a URL desejada e exibe a sua disponibilidade
 /*
  * Roadmap:
  *		- Testar multiplos sites por um array - OK
  *		- Testar multiplos sites por arquivo txt - OK <Nome doe site> <URL>
- *		- Enviar resultados por email
- * 		- Rodar automaticamente pelo cron
+ *		- Enviar resultados por email - OK
+ * 		- Rodar automaticamente pelo cron - OK
  *		- Generalizar usando funções ou objetos
- *		- Armazenar lista de sites em banco de dados ou algo mais leve
+ 			| Função que recebe o nome do aruivo e retorna array com os sites e urls.
+			| Função que recebe a nome e url, executa o teste e retorna a response e o status.
+			| Função que recebe o status, envia email e retorna o status do envio.
+ *		- Armazenar lista de sites em banco de dados ou algo mais leve (fique com arquivo de texto mesmo...)
+ *		Comando no cron: php -q /home/refst210/public_html/homolog/james/status.php
+ *		Será executado
+ 		Briarte Blogs http://criarteblogs.com.br/blog/wp-content/uploads/2017/08/criarteblog-logo.png
  */
 
-$lines = file("arquivo.txt", FILE_IGNORE_NEW_LINES);
-// var_dump($lines);
+// Separa nomes e URLs
+$urls = separaUrls("arquivo.txt");
 
-// Registra os itens do array $lines no array $urls
+$status[] = '';
 
-foreach ($lines as $line) {
-	$site = explode("http://", $line);
-	
-	// Define o array de sites a serem testados. (<Nome do site> => <url de teste>)
-	$urls[ $site[0] ] = $site[1];
-
-}
-
-// var_dump($urls);
-
-// Testa cada URL do arrya
+// Testa cada URL do array
 foreach($urls as $key => $url){
 
-	// echo $url;
-
-	// Inicia o CURL
-	$curl = curl_init();
-
-	curl_setopt($curl, CURLOPT_URL, $url);
-
-	curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
-	curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-
-	// Acessa a URL de fato
-	$out = curl_exec($curl);
-
-	// Obtém a resposta HTTP
-	$response = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-
-
-	// Exibe a resposta. Implementar teste de diversos códigos HTTP (418 - Eu sou um bule de chá). Diferenciar com font-weight.
-	if ($response == '404') {
-		echo "<h3 style='color:darkred;font-weight:bold;font-family: sans-serif;'>". $response ." : ". $key ." Fora do ar, Sir...</h3>";
-		
-		// Armazena o status para enviar por email
-		$status[$key] = "<span style='color:darkred;font-weight:bold;font-family: sans-serif;'>".$response ." ". $key ." Fora do ar, Sir...</span>";
-	} else {
-		echo "<h3 style='color:darkgreen;font-weight:200;font-family: sans-serif;'>". $response ." : ". $key ." Está bem, Sir...</h3>";
-
-		// Armazena o status para enviar por email
-		$status[$key] = "<span style='color:darkgreen;font-weight:200;font-family: sans-serif;'>". $response ." ". $key ." Está bem, Sir...</span>";
-	}
-
+	$status = verificaUrl($status, $key, $url);
 	echo "<hr></hr>";
 
 }
 
-	
-	/*
+// Verifica se existe algum site fora do ar para enviar o email.
+foreach($urls as $key => $url){
 
-	$corpo = "";
-
-	foreach ($status as $key => $value) {
-		$corpo = $corpo ."". $value ."<br>";
+	$offline = false;
+	$is_offline = verificaStatus($key, $url);
+	if ($is_offline == '404') {
+		$offline = true;
+		break;
 	}
+}
 
-	// echo $corpo;
-	
-	// Envia o email
-  	$email = "luizbweb@gmail.com";
-	$emailenviar = "luizbweb@gmail.com";
-	$destino = $emailenviar;
-	$assunto = "James - REFs Status";
+// var_dump($status);
 
-	// É necessário indicar que o formato do e-mail é html
-	$headers  = 'MIME-Version: 1.0' . "\r\n";
-	$headers .= 'Content-type: text/html; charset=utf-8' . "\r\n";
-	$headers .= 'From: <$email>';
-	//$headers .= "Bcc: $EmailPadrao\r\n";
+if ($offline) {
+	$result = enviarEmail($status,"luizbweb@gmail.com","luizbweb@gmail.com");
+	echo $result;
+}
 
-	$enviaremail = mail($destino, $assunto, $corpo, $headers);
-	
-	if($enviaremail){
-		$mgm = "E-MAIL ENVIADO COM SUCESSO!";
-		// echo " <meta http-equiv='refresh' content='10;URL=status.php'>";
-		echo $mgm;
-	} else {
-		$mgm = "ERRO AO ENVIAR E-MAIL!";
-		echo $mgm;
-	}*/
 
+/*
+*/
 ?>
+</body>
+</html>
