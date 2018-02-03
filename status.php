@@ -49,7 +49,7 @@ foreach($urls as $key => $url){
 
 	$offline = false;
 	$is_offline = verificaStatus($key, $url);
-	if ($is_offline == '404') {
+	if ($is_offline != '200') {
 		$offline = true;
 		break;
 	}
